@@ -1,0 +1,222 @@
+#1st 
+fib<-function(n){ 
+  if(n==1){
+    return(0)
+  }else if(n==2){
+    return(1)
+  }else{
+    return(fib(n-1)+fib(n-2))
+  }
+}
+n<-as.numeric(readline("Enter the series range : ")) 
+for(i in 0:n+1){
+  print(fib(i))
+}
+#2nd
+print("Enter the value of a, b, and c")
+a <- as.numeric(readline("a="))
+b <- as.numeric(readline("b="))
+c <- as.numeric(readline("c="))
+if (a == 0 && b == 0){
+  print("Invalid")
+}else if (a == 0){
+  r <- -c / b
+  print(paste("ROOT =", r))
+}else{
+  disc <- b * b - 4 * a * c
+  print(paste("DISC = ",disc))
+  if (disc == 0){
+    print("Real & equal")
+    r1 <- r2 <- -b / (2 * a)
+    print(paste("ROOT1 =", r1, "ROOT2 =", r2))
+  }else if (disc > 0){
+    print("Real & distinct")
+    r1 <- (-b + sqrt(disc)) / (2 * a)
+    r2 <- (-b - sqrt(disc)) / (2 * a)
+    print(paste("ROOT", r1, "ROOT2 =", r2))
+  }else{
+    print("Imaginary")
+    imag <- sqrt(-disc)/ (2 * a)
+    real <- -b / (2 * a)
+    print(paste("ROOT1 =", real, "+i", imag))
+    print(paste("ROOT2 =", real, "-i", imag))
+  }
+}
+#3rd
+a<-c(7,5,3,2,8,9,1,56) 
+print(a) 
+x.min<-a[1]
+for(i in a){
+  if(i<x.min)
+    x.min=i
+}
+print(x.min)
+#4
+random_no<-sample(1:10,1)
+guess<-as.integer(readline("Guess a number b/w 1 to 10: "))
+while(guess!=random_no){
+ if(guess > random_no){
+ print("Too High")
+ }else{
+ print("Too Low")
+ }
+ guess<-as.integer(readline("Guess again: "))
+}
+print("Congratulation!")
+#5
+sentence<-readline("Enter a sentence: ")
+sentence<-strsplit(sentence, "")[[1]] #DONT FORGET !!!
+v<-0 
+c<-0 
+for(char in tolower(sentence)){
+ if(char %in% c("a", "e", "i", "o", "u")){
+ v<-v+1
+ }else if(char>="a"&& char<="z")
+ c<-c+1
+}
+print(paste("Number of vowels:", v))
+print(paste("Number of consonants:", c))
+#6
+names <- c("Adith", "Babloo", "Sanju", "Raj","Ramu")
+ages <- c(20, 21, 35, 38, 45)
+df <- data.frame(Name = names, Age = ages)
+mean_age <- mean(df$Age)
+print(mean_age)
+median_age <- median(df$Age)
+print(median_age)
+#7
+calculate_mean <- function(column) {
+ return(mean(column, na.rm = TRUE))
+}
+calculate_median <- function(column) {
+ return(median(column, na.rm = TRUE))
+}
+calculate_variance <- function(column) {
+ return(var(column, na.rm = TRUE))
+}
+calculate_std_dev <- function(column) {
+ return(sd(column, na.rm = TRUE))
+}
+calculate_std_error <- function(column) {
+ return(sd(column, na.rm = TRUE) / sqrt(length(column)))
+}
+calculate_column_stats <- function(column) {
+ stats <- c(
+ mean = calculate_mean(column),
+ median = calculate_median(column),
+ variance = calculate_variance(column),
+ std_dev = calculate_std_dev(column),
+ std_error = calculate_std_error(column)
+ )
+ return(stats)
+}
+data <- data.frame(
+ name = c("Alice", "Bob", "Charlie", "David", "Emma"),
+ age = c(25, 32, 45, 28, 22),
+ income = c(50000, 60000, 75000, 55000, 40000),
+ expenses = c(30000, 35000, 40000, 32000, 28000)
+)
+numeric_columns <- sapply(data, is.numeric)
+numeric_stats <- lapply(data[numeric_columns], calculate_column_stats)
+numeric_stats_df <- do.call(rbind, numeric_stats)
+rownames(numeric_stats_df) <- paste0("Numeric_",colnames(data)[numeric_columns])
+print("Numeric Column Statistics:")
+print(numeric_stats_df)
+#8
+original_data <- read.table("C:\\Users\\suraj\\Downloads\\data (1).txt", header=TRUE)
+print("The original data is:")
+print(original_data)
+modified_data <- data.frame(apply(original_data, 2, function(column) ifelse(column<0, 0, column)))
+print("The modified data is:")
+print(modified_data)
+column_stats <- function(column){
+  stats <- c(
+    mean=mean(column),
+    variance=var(column),
+    std_dev=sd(column)
+  )
+  return(stats)
+}
+orig_stats <- lapply(original_data, column_stats)
+orig_stats_df <- do.call(rbind, orig_stats)
+rownames(orig_stats_df) <- c("Mean", "Variance", "Standard deviation")
+print("Column original statistics:")
+print(orig_stats_df)
+mod_stats <- lapply(modified_data, column_stats)
+mod_stats_df <- do.call(rbind, mod_stats)
+rownames(mod_stats_df) <- c("Mean", "Variance", "Standard deviation")
+cat("Column Modified Statistics:")
+print(mod_stats_df)
+#9
+Student <- setClass("Student", slots = c(name = "character", age = "numeric", height = "numeric"))
+students <- list(
+  new("Student", name = "Alice", age = 21, height = 165),
+  new("Student", name = "Bob", age = 22, height = 178),
+  new("Student", name = "Charlie", age = 21, height = 172),
+  new("Student", name = "David", age = 19, height = 160),
+  new("Student", name = "Emma", age = 23, height = 175),
+  new("Student", name = "Frank", age = 28, height = 170),
+  new("Student", name = "Grace", age = 34, height = 163),
+  new("Student", name = "Henry", age = 20, height = 180),
+  new("Student", name = "Ivy", age = 27, height = 168),
+  new("Student", name = "Jack", age = 30, height = 175)
+)
+get_name_upper <- function(student) {
+  return(toupper(student@name))
+}
+get_stats <- function(student) {
+  age <- student@age
+  height <- student@height
+  stats <- c(
+    mean_age = mean(age),
+    median_age = median(age),
+    mean_height = mean(height),
+    median_height = median(height)
+  )
+  return(stats)
+}
+names_upper <- sapply(students, get_name_upper)
+stats_list <- sapply(students, get_stats)
+mean_ages <- stats_list["mean_age", ]
+median_ages <- stats_list["median_age", ]
+mean_heights <- stats_list["mean_height", ]
+median_heights <- stats_list["median_height", ]
+results <- data.frame(Names = names_upper)
+print(results)
+print(paste("Mean Age: ", mean(mean_ages)))
+print(paste("Median Age: ", median(median_ages)))
+print(paste("Mean Height: ", mean(mean_heights))) 
+print(paste("Median Height: ", median(median_heights)))
+#10
+createStudent <- function(name, subjects_completed, grades, credit) {
+  list(
+    name = name,
+    subjects_completed = subjects_completed,
+    grades = grades,
+    credit = credit
+  )
+}
+meanGPA <- function(student) {
+  sum(student$grades * student$credit) / sum(student$credit)
+}
+printStudent <- function(student) {
+  cat("Name:", student$name, "\n")
+  cat("Subjects Completed:", student$subjects_completed, "\n")
+  cat("Grades:", student$grades, "\n")
+  cat("Credit:", student$credit, "\n")
+}
+meanCohortGPA <- function(cohort) {
+  mean(sapply(cohort$students,meanGPA))
+}
+printCohort <- function(cohort) {
+  for (student in cohort$students) {
+    printStudent(student)
+    cat("---------------------------\n")
+  }
+}
+student <- createStudent("John Doe", c("Math", "English", "Science"), c(80, 90, 85), c(3, 4, 3))
+cat("Mean GPA:", meanGPA(student), "\n")
+printStudent(student)
+cohort <- list(students = list(student, student))
+cat("Mean GPA for Cohort:", meanCohortGPA(cohort), "\n")
+printCohort(cohort)
